@@ -11,6 +11,8 @@ WORKDIR /build
 RUN ./build.sh
 
 FROM registry.fedoraproject.org/fedora:40
+RUN dnf install -y dnf-plugins-core
+RUN dnf -y copr enable michaelvogt/qemu-user-with-openat2 
 # Fast-track osbuild so we don't depend on the "slow" Fedora release process to implement new features in bib
 COPY ./group_osbuild-osbuild-fedora.repo /etc/yum.repos.d/
 COPY ./package-requires.txt .
