@@ -1,5 +1,5 @@
 FROM registry.fedoraproject.org/fedora:40 AS builder
-RUN dnf install -y git-core golang gpgme-devel libassuan-devel dnf-plugins-core && mkdir -p /build/bib
+RUN dnf install -y git-core golang gpgme-devel libassuan-devel dnf-plugins-core qemu-user.x86_64 qemu-user-binfmt.x86_64 qemu-user-static.x86_64 qemu-user-static-aarch64.x86_64 && mkdir -p /build/bib
 RUN dnf -y copr enable michaelvogt/qemu-user-with-openat2 
 COPY bib/go.mod bib/go.sum /build/bib/
 ARG GOPROXY=https://proxy.golang.org,direct
