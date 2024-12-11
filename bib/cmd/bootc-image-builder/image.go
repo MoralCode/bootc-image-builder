@@ -392,16 +392,18 @@ func manifestForISO(c *ManifestConfig, rng *rand.Rand) (*manifest.Manifest, erro
 
 		// def not found. As a fallback, try looking for the following combinations, in order:
 		// 1. ID_LIKE and VERSION_ID
-		imageDef, suberr := distrodef.LoadImageDef(c.DistroDefPaths, c.SourceInfo.OSRelease.IDLike, c.SourceInfo.OSRelease.VersionID, "anaconda-iso")
+		imageDef2, suberr := distrodef.LoadImageDef(c.DistroDefPaths, c.SourceInfo.OSRelease.IDLike, c.SourceInfo.OSRelease.VersionID, "anaconda-iso")
 		if suberr != nil {
 			return nil, err
 		}
 
 		// 2. ID_LIKE and the (nonstandard)) VERSION_LIKE
-		imageDef, suberr = distrodef.LoadImageDef(c.DistroDefPaths, c.SourceInfo.OSRelease.IDLike, c.SourceInfo.OSRelease.VersionLike, "anaconda-iso")
+		imageDef2, suberr = distrodef.LoadImageDef(c.DistroDefPaths, c.SourceInfo.OSRelease.IDLike, c.SourceInfo.OSRelease.VersionLike, "anaconda-iso")
 		if suberr != nil {
 			return nil, err
 		}
+
+		imageDef = imageDef2
 
 	}
 
