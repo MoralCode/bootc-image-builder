@@ -11,12 +11,13 @@ import (
 )
 
 type OSRelease struct {
-	PlatformID string
-	ID         string
-	IDLike     string
-	VersionID  string
-	Name       string
-	VariantID  string
+	PlatformID  string
+	ID          string
+	IDLike      string
+	VersionID   string
+	VersionLike string
+	Name        string
+	VariantID   string
 }
 
 type Info struct {
@@ -25,7 +26,7 @@ type Info struct {
 }
 
 func validateOSRelease(osrelease map[string]string) error {
-	// VARIANT_ID and ID_LIKE are optional
+	// VARIANT_ID and ID_LIKE/VERSION_LIKE are optional (VERSION_LIKE is nonstandard)
 	for _, key := range []string{"ID", "VERSION_ID", "NAME", "PLATFORM_ID"} {
 		if _, ok := osrelease[key]; !ok {
 			return fmt.Errorf("missing %s in os-release", key)
@@ -73,12 +74,13 @@ func LoadInfo(root string) (*Info, error) {
 
 	return &Info{
 		OSRelease: OSRelease{
-			ID:         osrelease["ID"],
-			VersionID:  osrelease["VERSION_ID"],
-			Name:       osrelease["NAME"],
-			PlatformID: osrelease["PLATFORM_ID"],
-			VariantID:  osrelease["VARIANT_ID"],
-			IDLike:     osrelease["ID_LIKE"],
+			ID:          osrelease["ID"],
+			VersionID:   osrelease["VERSION_ID"],
+			Name:        osrelease["NAME"],
+			PlatformID:  osrelease["PLATFORM_ID"],
+			VariantID:   osrelease["VARIANT_ID"],
+			IDLike:      osrelease["ID_LIKE"],
+			VersionLike: osrelease["VERSION_LIKE"], // THIS IS NOT STANDARDIZED YET
 		},
 
 		UEFIVendor: vendor,
