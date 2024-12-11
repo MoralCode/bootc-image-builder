@@ -398,7 +398,7 @@ func manifestForISO(c *ManifestConfig, rng *rand.Rand) (*manifest.Manifest, erro
 		}
 
 		// 2. ID_LIKE and the (nonstandard)) VERSION_LIKE
-		imageDef, suberr := distrodef.LoadImageDef(c.DistroDefPaths, c.SourceInfo.OSRelease.IDLike, c.SourceInfo.OSRelease.VersionLike, "anaconda-iso")
+		imageDef, suberr = distrodef.LoadImageDef(c.DistroDefPaths, c.SourceInfo.OSRelease.IDLike, c.SourceInfo.OSRelease.VersionLike, "anaconda-iso")
 		if suberr != nil {
 			return nil, err
 		}
